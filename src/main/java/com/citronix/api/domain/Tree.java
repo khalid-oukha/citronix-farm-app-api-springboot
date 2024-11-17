@@ -20,6 +20,9 @@ public class Tree {
     private Long id;
 
     private LocalDateTime plantationDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private TreeStatus status;
 
     @ManyToOne

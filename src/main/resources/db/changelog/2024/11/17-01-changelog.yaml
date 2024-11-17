@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1731861735527-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: season
+            tableName: harvest
+  - changeSet:
+      id: 1731861735527-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: season
+                  type: VARCHAR(255)
+            tableName: harvest
+  - changeSet:
+      id: 1731861735527-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: status
+            tableName: tree
+  - changeSet:
+      id: 1731861735527-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+            tableName: tree
+
