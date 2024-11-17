@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,4 +25,7 @@ public class Tree {
     @ManyToOne
     @JoinColumn(name = "field_id",nullable = false)
     private Field field;
+
+    @OneToMany(mappedBy = "tree")
+    private List<HarvestDetail> harvestDetails;
 }
