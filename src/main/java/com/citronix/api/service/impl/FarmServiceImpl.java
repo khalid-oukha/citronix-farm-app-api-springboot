@@ -4,6 +4,7 @@ import com.citronix.api.domain.Farm;
 import com.citronix.api.repository.FarmRepository;
 import com.citronix.api.service.FarmService;
 import com.citronix.api.web.DTO.FarmCreateDTO;
+import com.citronix.api.web.DTO.FarmUpdateDto;
 import com.citronix.api.web.exception.EntityAlreadyExistsException;
 import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.FarmMapper;
@@ -33,7 +34,6 @@ public class FarmServiceImpl implements FarmService {
     public void delete(Long id) {
         Farm farm = farmRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Farm with id '" + id + "' not found"));
-
         farmRepository.delete(farm);
     }
 
@@ -44,7 +44,11 @@ public class FarmServiceImpl implements FarmService {
     }
 
     @Override
-    public Farm update(FarmCreateDTO farmRequestDTO) {
-        return null;
+    public Farm update(Long id, FarmUpdateDto farmUpdateDto) {
+        Farm existingFarm = farmRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Farm with id '" + id + "' not found"));
+
+        Farm updateFarm = farmMapper.partialUpdate(farmUpdateDto, existingFarm);
+        return farmRepository.save(updateFarm);
     }
 }

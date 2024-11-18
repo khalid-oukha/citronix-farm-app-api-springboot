@@ -3,6 +3,7 @@ package com.citronix.api.web.rest;
 import com.citronix.api.domain.Farm;
 import com.citronix.api.service.FarmService;
 import com.citronix.api.web.DTO.FarmCreateDTO;
+import com.citronix.api.web.DTO.FarmUpdateDto;
 import com.citronix.api.web.VM.ResponseFarmVM;
 import com.citronix.api.web.mapper.FarmMapper;
 import jakarta.validation.Valid;
@@ -42,4 +43,11 @@ public class FarmController {
         farmService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Farm with ID " + id + " deleted successfully.");
     }
+
+    @PutMapping("/farms/{id}")
+    public ResponseEntity<ResponseFarmVM> update(@PathVariable Long id, @Valid @RequestBody FarmUpdateDto farmUpdateDto) {
+        Farm farm = farmService.update(id, farmUpdateDto);
+        return ResponseEntity.status(HttpStatus.OK).body(farmMapper.toResponseFarmVM(farm));
+    }
+
 }
