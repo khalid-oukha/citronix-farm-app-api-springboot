@@ -2,6 +2,7 @@ package com.citronix.api.service;
 
 import com.citronix.api.domain.Farm;
 import com.citronix.api.web.DTO.FarmCreateDTO;
+import com.citronix.api.web.DTO.FarmUpdateDto;
 
 public interface FarmService {
     Farm create(FarmCreateDTO farmRequestDTO);
@@ -10,5 +11,5 @@ public interface FarmService {
 
     Farm findById(Long id);
 
-    Farm update(FarmCreateDTO farmRequestDTO);
+    Farm update(Long id, FarmUpdateDto farmRequestDTO);
 }
