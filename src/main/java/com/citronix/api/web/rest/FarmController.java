@@ -36,4 +36,10 @@ public class FarmController {
         Farm farm = farmService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(farmMapper.toResponseFarmVM(farm));
     }
+
+    @DeleteMapping("/farms/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        farmService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Farm with ID " + id + " deleted successfully.");
+    }
 }
