@@ -9,10 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vi")
@@ -32,5 +29,11 @@ public class FarmController {
         Farm farm = farmService.create(farmCreateDTO);
         ResponseFarmVM createdFarm = farmMapper.toResponseFarmVM(farm);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFarm);
+    }
+
+    @GetMapping("/farms/{id}")
+    public ResponseEntity<ResponseFarmVM> findById(@PathVariable Long id) {
+        Farm farm = farmService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(farmMapper.toResponseFarmVM(farm));
     }
 }
