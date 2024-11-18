@@ -31,7 +31,10 @@ public class FarmServiceImpl implements FarmService {
 
     @Override
     public void delete(Long id) {
+        Farm farm = farmRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Farm with id '" + id + "' not found"));
 
+        farmRepository.delete(farm);
     }
 
     @Override
