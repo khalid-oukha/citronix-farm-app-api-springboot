@@ -5,15 +5,21 @@ import com.citronix.api.repository.FarmRepository;
 import com.citronix.api.service.FarmService;
 import com.citronix.api.web.DTO.FarmCreateDTO;
 import com.citronix.api.web.exception.EntityAlreadyExistsException;
+import com.citronix.api.web.mapper.FarmMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class FarmServiceImpl implements FarmService {
 
     private final FarmRepository farmRepository;
+    private final FarmMapper farmMapper;
 
-    public FarmServiceImpl(FarmRepository farmRepository) {
+    public FarmServiceImpl(FarmRepository farmRepository,
+                           FarmMapper farmMapper) {
         this.farmRepository = farmRepository;
+        this.farmMapper = farmMapper;
     }
 
     @Override
@@ -22,7 +28,11 @@ public class FarmServiceImpl implements FarmService {
             throw new EntityAlreadyExistsException("Farm with the name '" + farmRequestDTO.getName() + "' already exists.");
         }
 
-        return null;
+        if (farmRequestDTO.getCreatedAt() == null) {
+            farmRequestDTO.setCreatedAt(LocalDateTime.now());
+        }
+
+        return farmRepository.save(farmMapper.toFarm(farmRequestDTO));
     }
 
     @Override
