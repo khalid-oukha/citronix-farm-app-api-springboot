@@ -29,6 +29,7 @@ public class GlobalExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+        
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
