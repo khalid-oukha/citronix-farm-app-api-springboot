@@ -1,4 +1,4 @@
-package com.citronix.api.web.DTO;
+package com.citronix.api.web.DTO.farm;
 
 import lombok.*;
 
@@ -10,5 +10,5 @@ import lombok.*;
 public class FarmUpdateDto {
     private String name;
     private String location;
-    private double area;
+    private Double area;
 }
