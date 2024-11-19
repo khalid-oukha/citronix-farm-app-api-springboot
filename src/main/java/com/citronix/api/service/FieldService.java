@@ -4,6 +4,7 @@ import com.citronix.api.domain.Field;
 import com.citronix.api.web.DTO.field.FieldCreateDTO;
 import com.citronix.api.web.DTO.field.FieldUpdateDTO;
 
+
 public interface FieldService {
     Field create(FieldCreateDTO fieldCreateDTO);
 

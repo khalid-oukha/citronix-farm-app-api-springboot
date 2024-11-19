@@ -14,11 +14,8 @@ public interface FarmMapper {
     Farm toFarm(FarmCreateDTO farmRequestDTO);
 
     ResponseFarmVM toResponseFarmVM(Farm farm);
-
-    Farm toEntity(FarmUpdateDto farmUpdateDto);
-
-    FarmUpdateDto toDto(Farm farm);
-
+    
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Farm partialUpdate(FarmUpdateDto farmUpdateDto, @MappingTarget Farm farm);
+
 }

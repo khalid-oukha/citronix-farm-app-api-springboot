@@ -9,7 +9,11 @@ import com.citronix.api.service.FieldService;
 import com.citronix.api.web.DTO.field.FieldCreateDTO;
 import com.citronix.api.web.DTO.field.FieldUpdateDTO;
 import com.citronix.api.web.mapper.FieldMapper;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class FieldServiceImpl implements FieldService {
 
     private final FieldRepository fieldRepository;
@@ -30,14 +34,21 @@ public class FieldServiceImpl implements FieldService {
     @Override
     public Field create(FieldCreateDTO fieldCreateDTO) {
         Farm farm = farmService.findById(fieldCreateDTO.getFarmId());
-        
+
         fieldValidator.validateFieldCount(fieldRepository.countByFarm(farm));
         fieldValidator.validateFieldArea(farm.getArea(), fieldCreateDTO.getArea());
-        fieldValidator.validateTotalFieldArea(farm.getArea(), fieldRepository.sumAreaByFarm(farm), fieldCreateDTO.getArea());
 
-        return fieldRepository.save(fieldMapper.toField(fieldCreateDTO));
+        List<Field> fields = fieldRepository.findByFarm(farm);
+
+        double totalFieldsArea = fields.stream()
+                .mapToDouble(Field::getArea)
+                .sum();
+
+        fieldValidator.validateTotalFieldArea(farm.getArea(), totalFieldsArea, fieldCreateDTO.getArea());
+        Field field = fieldMapper.toField(fieldCreateDTO);
+        field.setFarm(farm);
+        return fieldRepository.save(field);
     }
-
 
     @Override
     public void delete(Long id) {

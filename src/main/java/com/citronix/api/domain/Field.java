@@ -21,8 +21,8 @@ public class Field {
 
     private double area;
 
-    @ManyToOne
-    @JoinColumn(name = "farm_id",nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "farm_id", nullable = false)
     private Farm farm;
 
     @OneToMany(mappedBy = "field")
