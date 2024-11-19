@@ -1,5 +1,6 @@
 package com.citronix.api.web.DTO.farm;
 
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 @Getter
@@ -10,5 +11,7 @@ import lombok.*;
 public class FarmUpdateDto {
     private String name;
     private String location;
+
+    @Positive(message = "Area must be greater than zero")
     private Double area;
 }
