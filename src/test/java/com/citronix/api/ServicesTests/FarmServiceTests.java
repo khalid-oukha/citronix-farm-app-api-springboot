@@ -4,6 +4,7 @@ import com.citronix.api.domain.Farm;
 import com.citronix.api.repository.FarmRepository;
 import com.citronix.api.service.impl.FarmServiceImpl;
 import com.citronix.api.web.DTO.FarmCreateDTO;
+import com.citronix.api.web.DTO.FarmUpdateDto;
 import com.citronix.api.web.exception.EntityAlreadyExistsException;
 import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.FarmMapper;
@@ -111,17 +112,67 @@ public class FarmServiceTests {
 
     @Test
     void should_throw_entity_not_found_exception_when_farm_not_found_by_id() {
+        Long farmId = 1L;
 
+        when(farmRepository.findById(farmId)).thenReturn(Optional.empty());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> farmService.findById(farmId));
+
+        assertEquals("Farm with id '1' not found", exception.getMessage());
     }
 
     @Test
     void should_update_farm_successfully() {
+        // Arrange
+        Long farmId = 1L;
 
+        Farm existingFarm = Farm.builder()
+                .id(farmId)
+                .name("old farm name")
+                .location("old location")
+                .area(20.0)
+                .build();
+
+        Farm updatedFarm = Farm.builder()
+                .id(farmId)
+                .name("new farm name")
+                .location("new location")
+                .area(50.0)
+                .build();
+
+        FarmUpdateDto updateDTO = FarmUpdateDto.builder()
+                .name("new farm name")
+                .location("new location")
+                .area(50.0)
+                .build();
+
+        when(farmRepository.findById(farmId)).thenReturn(Optional.of(existingFarm));
+        when(farmMapper.partialUpdate(updateDTO, existingFarm)).thenReturn(updatedFarm);
+        when(farmRepository.save(updatedFarm)).thenReturn(updatedFarm);
+
+        Farm result = farmService.update(farmId, updateDTO);
+
+        assertEquals(updatedFarm, result);
+        assertEquals("new farm name", result.getName());
+        assertEquals("new location", result.getLocation());
+        assertEquals(50.0, result.getArea());
     }
+
 
     @Test
     void should_throw_entity_not_found_exception_when_updating_non_existing_farm() {
+        Long farmId = 1L;
+        FarmUpdateDto updateDTO = FarmUpdateDto.builder()
+                .name("new farm name")
+                .location("new location")
+                .area(50.0)
+                .build();
 
+        when(farmRepository.findById(farmId)).thenReturn(Optional.empty());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> farmService.update(farmId, updateDTO));
+
+        assertEquals("Farm with id '1' not found", exception.getMessage());
     }
 
 }
