@@ -1,4 +1,4 @@
-package com.citronix.api.web.DTO;
+package com.citronix.api.web.DTO.farm;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
