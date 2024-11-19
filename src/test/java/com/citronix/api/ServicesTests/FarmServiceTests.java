@@ -95,7 +95,18 @@ public class FarmServiceTests {
 
     @Test
     void should_find_farm_by_id_successfully() {
+        Long farmId = 1L;
+        Farm expectedFarm = Farm.builder()
+                .id(farmId)
+                .name("farm khalid oukha")
+                .location("youssofia")
+                .area(40.33)
+                .build();
 
+        when(farmRepository.findById(farmId)).thenReturn(Optional.ofNullable(expectedFarm));
+
+        Farm result = farmService.findById(farmId);
+        assertEquals(expectedFarm, result);
     }
 
     @Test
