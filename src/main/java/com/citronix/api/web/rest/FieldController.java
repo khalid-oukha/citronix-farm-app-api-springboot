@@ -33,4 +33,10 @@ public class FieldController {
         ResponseFieldVM response = fieldMapper.toResponseFieldVM(field);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/fields/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        fieldService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
