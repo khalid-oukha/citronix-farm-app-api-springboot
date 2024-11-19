@@ -52,14 +52,15 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
-    public void delete(Long id) {
-
-    }
-
-    @Override
     public Field findById(Long id) {
         return fieldRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Field with id : " + id + " not found"));
+    }
+
+    @Override
+    public void delete(Long id) {
+        Field field = findById(id);
+        fieldRepository.delete(field);
     }
 
     @Override
