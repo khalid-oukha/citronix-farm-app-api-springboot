@@ -8,6 +8,7 @@ import com.citronix.api.service.FarmService;
 import com.citronix.api.service.FieldService;
 import com.citronix.api.web.DTO.field.FieldCreateDTO;
 import com.citronix.api.web.DTO.field.FieldUpdateDTO;
+import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.FieldMapper;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,8 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public Field findById(Long id) {
-        return null;
+        return fieldRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Field with id : " + id + " not found"));
     }
 
     @Override
