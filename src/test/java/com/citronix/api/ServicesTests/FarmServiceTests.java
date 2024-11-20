@@ -3,8 +3,8 @@ package com.citronix.api.ServicesTests;
 import com.citronix.api.domain.Farm;
 import com.citronix.api.repository.FarmRepository;
 import com.citronix.api.service.impl.FarmServiceImpl;
-import com.citronix.api.web.DTO.FarmCreateDTO;
-import com.citronix.api.web.DTO.FarmUpdateDto;
+import com.citronix.api.web.DTO.farm.FarmCreateDTO;
+import com.citronix.api.web.DTO.farm.FarmUpdateDto;
 import com.citronix.api.web.exception.EntityAlreadyExistsException;
 import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.FarmMapper;
@@ -174,5 +174,6 @@ public class FarmServiceTests {
 
         assertEquals("Farm with id '1' not found", exception.getMessage());
     }
+
 
 }

@@ -2,8 +2,8 @@ package com.citronix.api.web.rest;
 
 import com.citronix.api.domain.Farm;
 import com.citronix.api.service.FarmService;
-import com.citronix.api.web.DTO.FarmCreateDTO;
-import com.citronix.api.web.DTO.FarmUpdateDto;
+import com.citronix.api.web.DTO.farm.FarmCreateDTO;
+import com.citronix.api.web.DTO.farm.FarmUpdateDto;
 import com.citronix.api.web.VM.ResponseFarmVM;
 import com.citronix.api.web.mapper.FarmMapper;
 import jakarta.validation.Valid;
