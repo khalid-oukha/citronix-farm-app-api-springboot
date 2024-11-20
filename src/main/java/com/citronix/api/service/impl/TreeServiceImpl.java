@@ -37,7 +37,8 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public void delete(Long id) {
-
+        Tree tree = findById(id);
+        treeRepository.delete(tree);
     }
 
     @Override

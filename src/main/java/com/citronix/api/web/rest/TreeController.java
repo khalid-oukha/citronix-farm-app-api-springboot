@@ -31,4 +31,10 @@ public class TreeController {
         ResponseTreeVM response = treeMapper.toResponse(tree);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("/trees/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        treeService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
