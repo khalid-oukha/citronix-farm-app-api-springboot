@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/vi")
+@RequestMapping("/api/v1")
 public class FieldController {
 
     private final FieldService fieldService;
