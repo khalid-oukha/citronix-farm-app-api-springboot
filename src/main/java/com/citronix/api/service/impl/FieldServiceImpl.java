@@ -65,6 +65,19 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public Field update(Long id, FieldUpdateDTO fieldUpdateDTO) {
-        return null;
+        Field field = findById(id);
+        double totalFarmArea = field.getFarm().getArea() - fieldUpdateDTO.getArea();
+        fieldValidator.validateFieldArea(totalFarmArea, fieldUpdateDTO.getArea());
+
+        List<Field> fields = fieldRepository.findByFarm(field.getFarm());
+        double totalFieldsArea = fields.stream()
+                .filter(f -> !f.getId().equals(id))
+                .mapToDouble(Field::getArea)
+                .sum();
+
+        fieldValidator.validateTotalFieldArea(field.getFarm().getArea(), totalFieldsArea, fieldUpdateDTO.getArea());
+
+        Field updatedField = fieldMapper.partialUpdate(fieldUpdateDTO, field);
+        return fieldRepository.save(updatedField);
     }
 }
