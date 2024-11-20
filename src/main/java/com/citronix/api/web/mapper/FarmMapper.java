@@ -1,9 +1,9 @@
 package com.citronix.api.web.mapper;
 
 
+import com.citronix.api.DTO.farm.FarmCreateDTO;
+import com.citronix.api.DTO.farm.FarmUpdateDto;
 import com.citronix.api.domain.Farm;
-import com.citronix.api.web.DTO.farm.FarmCreateDTO;
-import com.citronix.api.web.DTO.farm.FarmUpdateDto;
 import com.citronix.api.web.VM.ResponseFarmVM;
 import org.mapstruct.*;
 
@@ -14,7 +14,7 @@ public interface FarmMapper {
     Farm toFarm(FarmCreateDTO farmRequestDTO);
 
     ResponseFarmVM toResponseFarmVM(Farm farm);
-    
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Farm partialUpdate(FarmUpdateDto farmUpdateDto, @MappingTarget Farm farm);
 

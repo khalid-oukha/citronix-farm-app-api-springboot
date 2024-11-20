@@ -1,9 +1,9 @@
 package com.citronix.api.web.rest;
 
+import com.citronix.api.DTO.farm.FarmCreateDTO;
+import com.citronix.api.DTO.farm.FarmUpdateDto;
 import com.citronix.api.domain.Farm;
 import com.citronix.api.service.FarmService;
-import com.citronix.api.web.DTO.farm.FarmCreateDTO;
-import com.citronix.api.web.DTO.farm.FarmUpdateDto;
 import com.citronix.api.web.VM.ResponseFarmVM;
 import com.citronix.api.web.mapper.FarmMapper;
 import jakarta.validation.Valid;
@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/vi")
+@RequestMapping("/api/v1")
 public class FarmController {
 
     private final FarmService farmService;

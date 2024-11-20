@@ -3,6 +3,7 @@ package com.citronix.api.aop.ExceptionHandlers;
 
 import com.citronix.api.web.exception.EntityAlreadyExistsException;
 import com.citronix.api.web.exception.EntityNotFoundException;
+import com.citronix.api.web.exception.OutOfSpaceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -45,6 +46,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(OutOfSpaceException.class)
+    public ResponseEntity<String> handleOutOfSpaceException(OutOfSpaceException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

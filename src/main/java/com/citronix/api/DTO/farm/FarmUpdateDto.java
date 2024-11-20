@@ -1,4 +1,4 @@
-package com.citronix.api.web.DTO.farm;
+package com.citronix.api.DTO.farm;
 
 import jakarta.validation.constraints.Positive;
 import lombok.*;

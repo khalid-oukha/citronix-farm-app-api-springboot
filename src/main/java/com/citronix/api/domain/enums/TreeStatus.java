@@ -2,6 +2,7 @@ package com.citronix.api.domain.enums;
 
 public enum TreeStatus {
     YOUNG,
-    PRODUCTIVE,
+    MATURE,
+    OLD,
     NON_PRODUCTIVE
 }

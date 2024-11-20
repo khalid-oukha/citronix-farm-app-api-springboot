@@ -26,9 +26,10 @@ public class Tree {
     private TreeStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "field_id",nullable = false)
+    @JoinColumn(name = "field_id", nullable = false)
     private Field field;
 
     @OneToMany(mappedBy = "tree")
     private List<HarvestDetail> harvestDetails;
+
 }
