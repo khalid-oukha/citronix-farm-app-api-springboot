@@ -1,10 +1,10 @@
 package com.citronix.api.service.impl;
 
+import com.citronix.api.DTO.farm.FarmCreateDTO;
+import com.citronix.api.DTO.farm.FarmUpdateDto;
 import com.citronix.api.domain.Farm;
 import com.citronix.api.repository.FarmRepository;
 import com.citronix.api.service.FarmService;
-import com.citronix.api.web.DTO.farm.FarmCreateDTO;
-import com.citronix.api.web.DTO.farm.FarmUpdateDto;
 import com.citronix.api.web.exception.EntityAlreadyExistsException;
 import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.FarmMapper;

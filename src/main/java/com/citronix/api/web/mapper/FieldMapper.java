@@ -1,9 +1,9 @@
 package com.citronix.api.web.mapper;
 
 
+import com.citronix.api.DTO.field.FieldCreateDTO;
+import com.citronix.api.DTO.field.FieldUpdateDTO;
 import com.citronix.api.domain.Field;
-import com.citronix.api.web.DTO.field.FieldCreateDTO;
-import com.citronix.api.web.DTO.field.FieldUpdateDTO;
 import com.citronix.api.web.VM.ResponseFieldVM;
 import org.mapstruct.*;
 

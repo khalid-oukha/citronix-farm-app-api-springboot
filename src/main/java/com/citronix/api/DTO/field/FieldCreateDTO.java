@@ -1,4 +1,4 @@
-package com.citronix.api.web.DTO.field;
+package com.citronix.api.DTO.field;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
