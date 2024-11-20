@@ -1,6 +1,7 @@
 package com.citronix.api.web.rest;
 
 import com.citronix.api.DTO.tree.TreeCreateDto;
+import com.citronix.api.DTO.tree.TreeUpdateDto;
 import com.citronix.api.domain.Tree;
 import com.citronix.api.service.TreeService;
 import com.citronix.api.web.VM.tree.ResponseTreeVM;
@@ -36,5 +37,11 @@ public class TreeController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         treeService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/trees/{id}")
+    public ResponseEntity<ResponseTreeVM> update(@PathVariable Long id, @Valid @RequestBody TreeUpdateDto treeUpdateDto) {
+        Tree tree = treeService.update(id, treeUpdateDto);
+        return ResponseEntity.status(HttpStatus.OK).body(treeMapper.toResponse(tree));
     }
 }

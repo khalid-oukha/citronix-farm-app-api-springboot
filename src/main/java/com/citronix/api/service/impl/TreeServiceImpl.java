@@ -52,7 +52,14 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Tree update(Long id, TreeUpdateDto treeUpdateDto) {
-        return null;
+        Tree existingTree = findById(id);
+        Tree updateTree = treeMapper.partialUpdate(treeUpdateDto, existingTree);
+        int age = calculateAge(updateTree.getPlantationDate());
+
+        updateTree.setStatus(determineStatusByAge(age));
+        updateTree.setField(existingTree.getField());
+
+        return treeRepository.save(updateTree);
     }
 
     public int calculateAge(LocalDateTime plantationDate) {
