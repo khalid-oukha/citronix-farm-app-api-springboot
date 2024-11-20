@@ -10,8 +10,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.time.Period;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseTreeVM {
@@ -20,9 +20,12 @@ public class ResponseTreeVM {
     private ResponseFieldVM field;
     private LocalDateTime plantationDate;
 
-    public void calculateAge(LocalDateTime plantationDate) {
-        LocalDateTime currentDate = LocalDateTime.now();
-        Period period = Period.between(plantationDate.toLocalDate(), currentDate.toLocalDate());
-        this.age = (long) period.getYears();
+    public void setPlantationDate(LocalDateTime plantationDate) {
+        this.plantationDate = plantationDate;
+        if (plantationDate != null) {
+            LocalDateTime currentDate = LocalDateTime.now();
+            Period period = Period.between(plantationDate.toLocalDate(), currentDate.toLocalDate());
+            this.age = (long) period.getYears();
+        }
     }
 }
