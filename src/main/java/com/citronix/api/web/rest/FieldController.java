@@ -1,9 +1,9 @@
 package com.citronix.api.web.rest;
 
+import com.citronix.api.DTO.field.FieldCreateDTO;
+import com.citronix.api.DTO.field.FieldUpdateDTO;
 import com.citronix.api.domain.Field;
 import com.citronix.api.service.FieldService;
-import com.citronix.api.web.DTO.field.FieldCreateDTO;
-import com.citronix.api.web.DTO.field.FieldUpdateDTO;
 import com.citronix.api.web.VM.ResponseFieldVM;
 import com.citronix.api.web.mapper.FieldMapper;
 import jakarta.validation.Valid;

@@ -1,13 +1,13 @@
 package com.citronix.api.ServicesTests;
 
+import com.citronix.api.DTO.field.FieldCreateDTO;
+import com.citronix.api.DTO.field.FieldUpdateDTO;
 import com.citronix.api.Helpers.FieldValidator;
 import com.citronix.api.domain.Farm;
 import com.citronix.api.domain.Field;
 import com.citronix.api.repository.FieldRepository;
 import com.citronix.api.service.FarmService;
 import com.citronix.api.service.impl.FieldServiceImpl;
-import com.citronix.api.web.DTO.field.FieldCreateDTO;
-import com.citronix.api.web.DTO.field.FieldUpdateDTO;
 import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.FieldMapper;
 import org.junit.jupiter.api.BeforeEach;

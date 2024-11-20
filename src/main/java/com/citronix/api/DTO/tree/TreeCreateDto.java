@@ -1,4 +1,4 @@
-package com.citronix.api.web.DTO.tree;
+package com.citronix.api.DTO.tree;
 
 import com.citronix.api.domain.enums.TreeStatus;
 import com.citronix.api.utils.validation.plantingPeriod.ValidPlantingPeriod;
