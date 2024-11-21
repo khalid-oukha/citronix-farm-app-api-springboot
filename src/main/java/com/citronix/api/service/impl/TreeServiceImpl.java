@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -68,4 +69,23 @@ public class TreeServiceImpl implements TreeService {
                 .orElseThrow(() -> new EntityNotFoundException("Tree with id : " + id + "Not found"));
     }
 
+    @Override
+    public List<Tree> productiveTreesByField(Field field) {
+        LocalDateTime twentyYearsAgo = LocalDateTime.now().minusYears(20);
+        return treeRepository.findByFieldAndPlantationDateAfter(field, twentyYearsAgo);
+    }
+
+    @Override
+    public double calculateTreeProductivity(Tree tree) {
+        int age = calculateAge(tree.getPlantationDate());
+        double productivity = 0;
+        if (age < 3) {
+            return productivity = 2.5;
+        } else if (age > 3 && age < 10) {
+            return productivity = 12;
+        } else if (age > 10 && age < 20) {
+            return productivity = 20;
+        }
+        return productivity;
+    }
 }
