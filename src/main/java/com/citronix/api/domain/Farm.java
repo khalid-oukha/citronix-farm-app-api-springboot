@@ -28,6 +28,6 @@ public class Farm {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "farm")
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private List<Field> fields;
 }

@@ -1,6 +1,7 @@
 package com.citronix.api.service.impl;
 
 import com.citronix.api.DTO.tree.TreeCreateDto;
+import com.citronix.api.DTO.tree.TreeUpdateDto;
 import com.citronix.api.domain.Field;
 import com.citronix.api.domain.Tree;
 import com.citronix.api.repository.TreeRepository;
@@ -11,6 +12,10 @@ import com.citronix.api.web.exception.OutOfSpaceException;
 import com.citronix.api.web.mapper.TreeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +35,7 @@ public class TreeServiceImpl implements TreeService {
         }
 
         Tree tree = treeMapper.toTree(treeCreateDto);
+
         tree.setField(field);
 
         return treeRepository.save(tree);
@@ -42,8 +48,24 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
+    public Tree update(Long id, TreeUpdateDto treeUpdateDto) {
+        Tree existingTree = findById(id);
+        Tree updateTree = treeMapper.partialUpdate(treeUpdateDto, existingTree);
+
+        updateTree.setField(existingTree.getField());
+
+        return treeRepository.save(updateTree);
+    }
+
+    public int calculateAge(LocalDateTime plantationDate) {
+        Period period = Period.between(plantationDate.toLocalDate(), LocalDate.now());
+        return period.getYears();
+    }
+
+    @Override
     public Tree findById(Long id) {
         return treeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tree with id : " + id + "Not found"));
     }
+
 }

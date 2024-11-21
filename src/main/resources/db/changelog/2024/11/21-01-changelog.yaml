@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732209915304-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: status
+            tableName: tree
+

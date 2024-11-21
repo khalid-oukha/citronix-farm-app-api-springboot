@@ -1,6 +1,5 @@
 package com.citronix.api.domain;
 
-import com.citronix.api.domain.enums.TreeStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,10 +19,6 @@ public class Tree {
     private Long id;
 
     private LocalDateTime plantationDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private TreeStatus status;
 
     @ManyToOne
     @JoinColumn(name = "field_id", nullable = false)
