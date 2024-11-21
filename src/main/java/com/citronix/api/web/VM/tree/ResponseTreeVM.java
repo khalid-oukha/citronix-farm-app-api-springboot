@@ -1,6 +1,5 @@
 package com.citronix.api.web.VM.tree;
 
-import com.citronix.api.domain.enums.TreeStatus;
 import com.citronix.api.web.VM.ResponseFieldVM;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +16,6 @@ import java.time.Period;
 public class ResponseTreeVM {
     private Long id;
     private Long age;
-    private TreeStatus status;
     private ResponseFieldVM field;
     private LocalDateTime plantationDate;
 

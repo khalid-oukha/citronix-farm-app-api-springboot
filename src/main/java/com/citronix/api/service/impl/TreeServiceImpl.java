@@ -4,7 +4,6 @@ import com.citronix.api.DTO.tree.TreeCreateDto;
 import com.citronix.api.DTO.tree.TreeUpdateDto;
 import com.citronix.api.domain.Field;
 import com.citronix.api.domain.Tree;
-import com.citronix.api.domain.enums.TreeStatus;
 import com.citronix.api.repository.TreeRepository;
 import com.citronix.api.service.FieldService;
 import com.citronix.api.service.TreeService;
@@ -36,9 +35,7 @@ public class TreeServiceImpl implements TreeService {
         }
 
         Tree tree = treeMapper.toTree(treeCreateDto);
-        int age = calculateAge(tree.getPlantationDate());
 
-        tree.setStatus(determineStatusByAge(age));
         tree.setField(field);
 
         return treeRepository.save(tree);
@@ -54,9 +51,7 @@ public class TreeServiceImpl implements TreeService {
     public Tree update(Long id, TreeUpdateDto treeUpdateDto) {
         Tree existingTree = findById(id);
         Tree updateTree = treeMapper.partialUpdate(treeUpdateDto, existingTree);
-        int age = calculateAge(updateTree.getPlantationDate());
 
-        updateTree.setStatus(determineStatusByAge(age));
         updateTree.setField(existingTree.getField());
 
         return treeRepository.save(updateTree);
@@ -71,18 +66,6 @@ public class TreeServiceImpl implements TreeService {
     public Tree findById(Long id) {
         return treeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tree with id : " + id + "Not found"));
-    }
-
-    private TreeStatus determineStatusByAge(int age) {
-        if (age < 3) {
-            return TreeStatus.YOUNG;
-        } else if (age <= 10) {
-            return TreeStatus.MATURE;
-        } else if (age < 20) {
-            return TreeStatus.OLD;
-        } else {
-            return TreeStatus.NON_PRODUCTIVE;
-        }
     }
 
 }
