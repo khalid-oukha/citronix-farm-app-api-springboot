@@ -9,10 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,5 +24,12 @@ public class HarvestController {
         Harvest harvest = harvestService.create(harvestCreateDTO);
         HarvestResponseVM response = harvestMapper.toResponse(harvest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/harvest/{id}")
+    public ResponseEntity<HarvestResponseVM> findById(@PathVariable Long id) {
+        Harvest harvest = harvestService.findById(id);
+        HarvestResponseVM response = harvestMapper.toResponse(harvest);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

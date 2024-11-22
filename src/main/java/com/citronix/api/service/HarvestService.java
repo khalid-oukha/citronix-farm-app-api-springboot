@@ -5,4 +5,6 @@ import com.citronix.api.domain.Harvest;
 
 public interface HarvestService {
     Harvest create(HarvestCreateDTO harvestCreateDTO);
+
+    Harvest findById(Long id);
 }
