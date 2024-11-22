@@ -1,6 +1,7 @@
 package com.citronix.api.web.rest;
 
 import com.citronix.api.DTO.harvest.HarvestCreateDTO;
+import com.citronix.api.DTO.harvest.HarvestUpdateDTO;
 import com.citronix.api.domain.Harvest;
 import com.citronix.api.service.HarvestService;
 import com.citronix.api.web.VM.Harvest.HarvestResponseVM;
@@ -38,4 +39,15 @@ public class HarvestController {
         harvestService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/harvest/{id}")
+    public ResponseEntity<HarvestResponseVM> update(
+            @PathVariable Long id,
+            @Valid @RequestBody HarvestUpdateDTO harvestUpdateDTO
+    ) {
+        Harvest updatedHarvest = harvestService.update(id, harvestUpdateDTO);
+        HarvestResponseVM response = harvestMapper.toResponse(updatedHarvest);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }
