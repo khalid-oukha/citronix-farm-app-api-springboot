@@ -1,4 +1,4 @@
-package com.citronix.api.web.VM;
+package com.citronix.api.web.VM.HarvestDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

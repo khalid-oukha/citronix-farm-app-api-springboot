@@ -1,4 +1,4 @@
-package com.citronix.api.web.VM;
+package com.citronix.api.web.VM.Farm;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
