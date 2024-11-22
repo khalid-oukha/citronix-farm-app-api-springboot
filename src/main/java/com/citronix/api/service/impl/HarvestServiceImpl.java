@@ -1,6 +1,7 @@
 package com.citronix.api.service.impl;
 
 import com.citronix.api.DTO.harvest.HarvestCreateDTO;
+import com.citronix.api.DTO.harvest.HarvestUpdateDTO;
 import com.citronix.api.domain.Field;
 import com.citronix.api.domain.Harvest;
 import com.citronix.api.domain.HarvestDetail;
@@ -79,6 +80,34 @@ public class HarvestServiceImpl implements HarvestService {
         Harvest harvest = findById(id);
         harvestRepository.delete(harvest);
     }
+
+    @Transactional
+    @Override
+    public Harvest update(Long id, HarvestUpdateDTO harvestUpdateDTO) {
+        Harvest existingHarvest = findById(id);
+
+        LocalDateTime newHarvestDate = harvestUpdateDTO.getHarvestDate();
+
+        SeasonType newSeason = determineSeason(newHarvestDate);
+
+        Field field = existingHarvest.getHarvestDetails().stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Harvest has no associated trees"))
+                .getTree()
+                .getField();
+
+        int newYear = newHarvestDate.getYear();
+        if (harvestRepository.existsByFieldAndSeasonAndHarvestDateYear(field, newSeason, newYear)) {
+            throw new IllegalArgumentException(
+                    "A harvest already exists for this field in the " + newSeason + " season of " + newYear);
+        }
+
+        existingHarvest.setHarvestDate(newHarvestDate);
+        existingHarvest.setSeason(newSeason);
+
+        return harvestRepository.save(existingHarvest);
+    }
+
 
     public List<HarvestDetail> addAllHarvestDetails(Harvest harvest, List<Tree> trees) {
         List<HarvestDetail> harvestDetails = new ArrayList<>();
