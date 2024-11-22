@@ -67,6 +67,20 @@ public class HarvestServiceImpl implements HarvestService {
         return harvest;
     }
 
+    @Override
+    public double calculateTotalProductivity(List<Tree> trees) {
+        return trees.stream()
+                .mapToDouble(treeService::calculateTreeProductivity)
+                .sum();
+    }
+
+    @Override
+    public void delete(Long id) {
+        Harvest harvest = findById(id);
+        harvestRepository.delete(harvest);
+    }
+
+
     public List<HarvestDetail> addAllHarvestDetails(Harvest harvest, List<Tree> trees) {
         List<HarvestDetail> harvestDetails = new ArrayList<>();
         for (Tree tree : trees) {
@@ -81,11 +95,6 @@ public class HarvestServiceImpl implements HarvestService {
         return harvestDetails;
     }
 
-    public double calculateTotalProductivity(List<Tree> trees) {
-        return trees.stream()
-                .mapToDouble(treeService::calculateTreeProductivity)
-                .sum();
-    }
 
     private SeasonType determineSeason(LocalDateTime harvestDate) {
 
