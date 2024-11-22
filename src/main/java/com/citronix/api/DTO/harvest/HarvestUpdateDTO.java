@@ -10,6 +10,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HarvestUpdateDTO {
-    
     private LocalDateTime harvestDate;
 }
