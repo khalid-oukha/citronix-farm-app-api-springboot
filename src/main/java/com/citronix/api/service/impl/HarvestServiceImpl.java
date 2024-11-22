@@ -11,12 +11,14 @@ import com.citronix.api.service.FieldService;
 import com.citronix.api.service.HarvestDetailService;
 import com.citronix.api.service.HarvestService;
 import com.citronix.api.service.TreeService;
+import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.HarvestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,6 +30,14 @@ public class HarvestServiceImpl implements HarvestService {
     private final TreeService treeService;
     private final FieldService fieldService;
     private final HarvestMapper harvestMapper;
+
+
+    @Override
+    public Harvest findById(Long id) {
+        return harvestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("harvest not found"));
+    }
+
 
     @Transactional
     @Override
@@ -47,20 +57,29 @@ public class HarvestServiceImpl implements HarvestService {
         double totalQuantity = calculateTotalProductivity(trees);
         harvest.setTotalQuantity(totalQuantity);
         harvest.setSeason(season);
+
         harvest = harvestRepository.save(harvest);
 
+        List<HarvestDetail> harvestDetails = addAllHarvestDetails(harvest, trees);
+
+
+        harvest.setHarvestDetails(harvestDetails);
+        return harvest;
+    }
+
+    public List<HarvestDetail> addAllHarvestDetails(Harvest harvest, List<Tree> trees) {
+        List<HarvestDetail> harvestDetails = new ArrayList<>();
         for (Tree tree : trees) {
             HarvestDetail harvestDetail = HarvestDetail.builder()
                     .harvest(harvest)
                     .tree(tree)
                     .quantity(treeService.calculateTreeProductivity(tree))
                     .build();
-            harvestDetailService.create(harvestDetail);
+            harvestDetails.add(harvestDetail);
         }
-
-        return harvest;
+        harvestDetailService.createAll(harvestDetails);
+        return harvestDetails;
     }
-
 
     public double calculateTotalProductivity(List<Tree> trees) {
         return trees.stream()
@@ -81,8 +100,7 @@ public class HarvestServiceImpl implements HarvestService {
         } else {
             return SeasonType.FALL;
         }
-
-
     }
+
 
 }

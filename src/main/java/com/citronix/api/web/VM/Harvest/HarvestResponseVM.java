@@ -1,6 +1,6 @@
 package com.citronix.api.web.VM.Harvest;
 
-import com.citronix.api.domain.HarvestDetail;
+import com.citronix.api.web.VM.ResponseHarvestDetailVM;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,6 @@ public class HarvestResponseVM {
     private Long id;
     private LocalDateTime harvestDate;
     private double totalQuantity;
-    private List<HarvestDetail> harvestDetails;
+    private List<ResponseHarvestDetailVM> harvestDetails;
 
 }

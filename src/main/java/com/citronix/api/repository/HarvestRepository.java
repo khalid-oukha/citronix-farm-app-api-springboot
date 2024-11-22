@@ -19,4 +19,5 @@ public interface HarvestRepository extends JpaRepository<Harvest, Long> {
     boolean existsByFieldAndSeasonAndHarvestDateYear(@Param("field") Field field,
                                                      @Param("season") SeasonType season,
                                                      @Param("year") int year);
+
 }
