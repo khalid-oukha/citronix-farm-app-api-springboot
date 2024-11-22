@@ -23,13 +23,18 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public Sale create(SaleCreateDto saleCreateDto) {
         Harvest harvest = harvestService.findById(saleCreateDto.getHarvestId());
-        List<Sale> previousSales = saleRepository.findAll();
+        List<Sale> previousSales = saleRepository.findAllByHarvest(harvest);
+        double quantitySaled = totalQuantitySaled(previousSales);
 
-        double totalQuantitySaled = previousSales.stream()
-                .mapToDouble(Sale::getQuantity)
-                .sum();
+        double remaining = harvest.getTotalQuantity() - quantitySaled;
+        if (harvest.getTotalQuantity() - quantitySaled < saleCreateDto.getQuantity()) {
+            throw new IllegalArgumentException("There is no available quantity to sale remaining : " + remaining);
+        }
 
-        return null;
+        Sale sale = saleMapper.toSale(saleCreateDto);
+        sale.setRevenue(sale.getQuantity() * sale.getUnitPrice());
+        sale.setHarvest(harvest);
+        return saleRepository.save(saleMapper.toSale(saleCreateDto));
     }
 
     @Override
@@ -37,4 +42,9 @@ public class SaleServiceImpl implements SaleService {
         return saleRepository.findAllByHarvest(harvest);
     }
 
+    public double totalQuantitySaled(List<Sale> sales) {
+        return sales.stream()
+                .mapToDouble(Sale::getQuantity)
+                .sum();
+    }
 }

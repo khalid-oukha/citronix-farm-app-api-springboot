@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface SaleMapper {
+    @Mapping(target = "harvest.id", source = "harvestId")
     Sale toSale(SaleCreateDto saleCreateDto);
 
     @Mapping(target = "harvest", source = "harvest")
