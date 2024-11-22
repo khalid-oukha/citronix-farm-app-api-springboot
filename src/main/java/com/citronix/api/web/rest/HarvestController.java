@@ -32,4 +32,10 @@ public class HarvestController {
         HarvestResponseVM response = harvestMapper.toResponse(harvest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/harvest/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        harvestService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

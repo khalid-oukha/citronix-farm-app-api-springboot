@@ -80,7 +80,6 @@ public class HarvestServiceImpl implements HarvestService {
         harvestRepository.delete(harvest);
     }
 
-
     public List<HarvestDetail> addAllHarvestDetails(Harvest harvest, List<Tree> trees) {
         List<HarvestDetail> harvestDetails = new ArrayList<>();
         for (Tree tree : trees) {

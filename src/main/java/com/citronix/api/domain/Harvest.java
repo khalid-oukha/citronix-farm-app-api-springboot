@@ -28,7 +28,7 @@ public class Harvest {
     private LocalDateTime harvestDate;
     private double totalQuantity;
 
-    @OneToMany(mappedBy = "harvest")
+    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
     private List<HarvestDetail> harvestDetails;
 
     @OneToMany(mappedBy = "harvest")
