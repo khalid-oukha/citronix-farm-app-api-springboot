@@ -80,11 +80,11 @@ public class TreeServiceImpl implements TreeService {
         int age = calculateAge(tree.getPlantationDate());
         double productivity = 0;
         if (age < 3) {
-            return productivity = 2.5;
+            return 2.5;
         } else if (age > 3 && age < 10) {
-            return productivity = 12;
+            return 12;
         } else if (age > 10 && age < 20) {
-            return productivity = 20;
+            return 20;
         }
         return productivity;
     }

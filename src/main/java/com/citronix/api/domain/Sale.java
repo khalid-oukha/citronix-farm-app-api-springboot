@@ -24,6 +24,11 @@ public class Sale {
     private double Revenue;
 
     @ManyToOne
-    @JoinColumn(name = "harvest_id",nullable = false)
+    @JoinColumn(name = "harvest_id", nullable = false)
     private Harvest harvest;
+
+    @PrePersist
+    public void prePersist() {
+        this.date = LocalDateTime.now();
+    }
 }
