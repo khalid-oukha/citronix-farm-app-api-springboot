@@ -1,6 +1,5 @@
 package com.citronix.api.web.VM.Sale;
 
-import com.citronix.api.domain.Harvest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +18,9 @@ public class ResponseSaleVM {
     private double quantity;
     private String client;
     private double Revenue;
-    private Harvest harvest;
+    private double revenue;
+    private Long harvestId;
+    private double harvestTotalQuantity;
+    private LocalDateTime harvestDate;
+    private String harvestSeason;
 }

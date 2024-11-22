@@ -11,6 +11,9 @@ public interface SaleMapper {
     @Mapping(target = "harvest.id", source = "harvestId")
     Sale toSale(SaleCreateDto saleCreateDto);
 
-    @Mapping(target = "harvest", source = "harvest")
+    @Mapping(source = "harvest.id", target = "harvestId")
+    @Mapping(source = "harvest.totalQuantity", target = "harvestTotalQuantity")
+    @Mapping(source = "harvest.harvestDate", target = "harvestDate")
+    @Mapping(source = "harvest.season", target = "harvestSeason")
     ResponseSaleVM toResponse(Sale sale);
 }

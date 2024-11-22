@@ -18,5 +18,4 @@ public class HarvestResponseVM {
     private LocalDateTime harvestDate;
     private double totalQuantity;
     private List<ResponseHarvestDetailVM> harvestDetails;
-
 }
