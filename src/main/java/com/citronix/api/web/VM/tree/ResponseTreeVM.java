@@ -1,6 +1,6 @@
 package com.citronix.api.web.VM.tree;
 
-import com.citronix.api.web.VM.ResponseFieldVM;
+import com.citronix.api.web.VM.Field.ResponseFieldVM;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

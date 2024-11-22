@@ -4,7 +4,7 @@ import com.citronix.api.DTO.harvest.HarvestCreateDTO;
 import com.citronix.api.domain.Harvest;
 import com.citronix.api.domain.HarvestDetail;
 import com.citronix.api.web.VM.Harvest.HarvestResponseVM;
-import com.citronix.api.web.VM.ResponseHarvestDetailVM;
+import com.citronix.api.web.VM.HarvestDetail.ResponseHarvestDetailVM;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,5 +1,6 @@
-package com.citronix.api.web.VM;
+package com.citronix.api.web.VM.Field;
 
+import com.citronix.api.web.VM.Farm.ResponseFarmVM;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
