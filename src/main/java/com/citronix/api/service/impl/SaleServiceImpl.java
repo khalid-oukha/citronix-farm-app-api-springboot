@@ -9,6 +9,8 @@ import com.citronix.api.service.SaleService;
 import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.SaleMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +41,24 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public List<Sale> findAllByHarvest(Harvest harvest) {
+    public void delete(Long id) {
+        Sale sale = findById(id);
+        saleRepository.delete(sale);
+    }
+
+    @Override
+    public Page<Sale> getAllSales(Pageable pageable) {
+        return saleRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Sale> findAll(Pageable pageable) {
+        return saleRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Sale> findAllByHarvest(Long id) {
+        Harvest harvest = harvestService.findById(id);
         return saleRepository.findAllByHarvest(harvest);
     }
 
@@ -60,6 +79,5 @@ public class SaleServiceImpl implements SaleService {
                     "There is no available quantity to sale. Remaining: " + remaining);
         }
     }
-
 
 }
