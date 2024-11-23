@@ -6,6 +6,7 @@ import com.citronix.api.domain.Sale;
 import com.citronix.api.repository.SaleRepository;
 import com.citronix.api.service.HarvestService;
 import com.citronix.api.service.SaleService;
+import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.SaleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class SaleServiceImpl implements SaleService {
     private final HarvestService harvestService;
     private final SaleMapper saleMapper;
 
+
+    @Override
+    public Sale findById(Long id) {
+        return saleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("sale with id : " + id + "not found"));
+    }
 
     @Override
     public Sale create(SaleCreateDto saleCreateDto) {
@@ -53,4 +60,6 @@ public class SaleServiceImpl implements SaleService {
                     "There is no available quantity to sale. Remaining: " + remaining);
         }
     }
+
+
 }
