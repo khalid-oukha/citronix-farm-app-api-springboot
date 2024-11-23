@@ -1,13 +1,17 @@
 package com.citronix.api.service.impl;
 
 import com.citronix.api.DTO.sale.SaleCreateDto;
+import com.citronix.api.DTO.sale.SaleUpdateDto;
 import com.citronix.api.domain.Harvest;
 import com.citronix.api.domain.Sale;
 import com.citronix.api.repository.SaleRepository;
 import com.citronix.api.service.HarvestService;
 import com.citronix.api.service.SaleService;
+import com.citronix.api.web.exception.EntityNotFoundException;
 import com.citronix.api.web.mapper.SaleMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,12 @@ public class SaleServiceImpl implements SaleService {
 
 
     @Override
+    public Sale findById(Long id) {
+        return saleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("sale with id : " + id + "not found"));
+    }
+
+    @Override
     public Sale create(SaleCreateDto saleCreateDto) {
         Harvest harvest = harvestService.findById(saleCreateDto.getHarvestId());
         validateQuantity(saleCreateDto.getQuantity(), harvest);
@@ -32,8 +42,41 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public List<Sale> findAllByHarvest(Harvest harvest) {
+    public void delete(Long id) {
+        Sale sale = findById(id);
+        saleRepository.delete(sale);
+    }
+
+    @Override
+    public Page<Sale> getAllSales(Pageable pageable) {
+        return saleRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Sale> findAll(Pageable pageable) {
+        return saleRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Sale> findAllByHarvest(Long id) {
+        Harvest harvest = harvestService.findById(id);
         return saleRepository.findAllByHarvest(harvest);
+    }
+
+
+    @Override
+    public Sale update(Long id, SaleUpdateDto saleUpdateDto) {
+        Sale existingSale = findById(id);
+        Harvest harvest = existingSale.getHarvest();
+        double additionalQuantity = saleUpdateDto.getQuantity() - existingSale.getQuantity();
+
+        if (additionalQuantity > 0) {
+            validateQuantity(additionalQuantity, harvest);
+        }
+
+        existingSale = saleMapper.partialUpdate(saleUpdateDto, existingSale);
+        existingSale.setRevenue(existingSale.getQuantity() * saleUpdateDto.getUnitPrice());
+        return saleRepository.save(existingSale);
     }
 
     public double totalQuantitySaled(List<Sale> sales) {
@@ -53,4 +96,5 @@ public class SaleServiceImpl implements SaleService {
                     "There is no available quantity to sale. Remaining: " + remaining);
         }
     }
+
 }

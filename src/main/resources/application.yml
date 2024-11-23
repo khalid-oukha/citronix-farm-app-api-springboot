@@ -3,9 +3,9 @@ spring:
     name: citronixFarm
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/citronix
-    username: admin
-    password: admin
+    url: ${JDBC_URL}
+    username: ${JDBC_USERNAME}
+    password: ${JDBC_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
