@@ -228,4 +228,63 @@ public class FieldServiceTests {
 
         assertEquals("Field with id : 1 not found", exception.getMessage());
     }
+
+    @Test
+    void update_should_exclude_current_field_from_area_calculation() {
+        Long fieldId = 1L;
+
+        Farm farm = Farm.builder()
+                .id(100L)
+                .name("Farm Alpha")
+                .area(5000.0)
+                .build();
+
+        Field existingField = Field.builder()
+                .id(fieldId)
+                .name("Field 1")
+                .farm(farm)
+                .area(1000.0)
+                .build();
+
+        Field otherField1 = Field.builder()
+                .id(2L)
+                .name("Field 2")
+                .farm(farm)
+                .area(1500.0)
+                .build();
+
+        Field otherField2 = Field.builder()
+                .id(3L)
+                .name("Field 3")
+                .farm(farm)
+                .area(500.0)
+                .build();
+
+        FieldUpdateDTO updateDTO = FieldUpdateDTO.builder()
+                .name("Updated Field 1")
+                .area(2000.0)
+                .build();
+
+        when(fieldRepository.findById(fieldId)).thenReturn(Optional.of(existingField));
+        when(fieldRepository.findByFarm(farm)).thenReturn(List.of(existingField, otherField1, otherField2));
+        when(fieldMapper.partialUpdate(updateDTO, existingField)).thenAnswer(invocation -> {
+            Field updatedField = invocation.getArgument(1);
+            updatedField.setName(updateDTO.getName());
+            updatedField.setArea(updateDTO.getArea());
+            return updatedField;
+        });
+        when(fieldRepository.save(any(Field.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        doNothing().when(fieldValidator).validateFieldArea(farm.getArea() - updateDTO.getArea(), updateDTO.getArea());
+        doNothing().when(fieldValidator).validateTotalFieldArea(farm.getArea(), 2000.0, updateDTO.getArea());
+
+        Field result = fieldService.update(fieldId, updateDTO);
+
+        assertEquals("Updated Field 1", result.getName());
+        assertEquals(2000.0, result.getArea());
+        assertEquals(farm, result.getFarm());
+
+        verify(fieldRepository).findByFarm(farm);
+        verify(fieldValidator).validateTotalFieldArea(eq(farm.getArea()), eq(2000.0), eq(2000.0));
+    }
 }
