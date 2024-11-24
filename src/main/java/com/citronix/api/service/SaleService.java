@@ -1,6 +1,7 @@
 package com.citronix.api.service;
 
 import com.citronix.api.DTO.sale.SaleCreateDto;
+import com.citronix.api.DTO.sale.SaleUpdateDto;
 import com.citronix.api.domain.Sale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,6 @@ public interface SaleService {
     Page<Sale> findAll(Pageable pageable);
 
     List<Sale> findAllByHarvest(Long id);
+
+    Sale update(Long id, SaleUpdateDto saleUpdateDto);
 }

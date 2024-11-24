@@ -1,6 +1,7 @@
 package com.citronix.api.service.impl;
 
 import com.citronix.api.DTO.sale.SaleCreateDto;
+import com.citronix.api.DTO.sale.SaleUpdateDto;
 import com.citronix.api.domain.Harvest;
 import com.citronix.api.domain.Sale;
 import com.citronix.api.repository.SaleRepository;
@@ -60,6 +61,22 @@ public class SaleServiceImpl implements SaleService {
     public List<Sale> findAllByHarvest(Long id) {
         Harvest harvest = harvestService.findById(id);
         return saleRepository.findAllByHarvest(harvest);
+    }
+
+
+    @Override
+    public Sale update(Long id, SaleUpdateDto saleUpdateDto) {
+        Sale existingSale = findById(id);
+        Harvest harvest = existingSale.getHarvest();
+        double additionalQuantity = saleUpdateDto.getQuantity() - existingSale.getQuantity();
+
+        if (additionalQuantity > 0) {
+            validateQuantity(additionalQuantity, harvest);
+        }
+
+        existingSale = saleMapper.partialUpdate(saleUpdateDto, existingSale);
+        existingSale.setRevenue(existingSale.getQuantity() * saleUpdateDto.getUnitPrice());
+        return saleRepository.save(existingSale);
     }
 
     public double totalQuantitySaled(List<Sale> sales) {

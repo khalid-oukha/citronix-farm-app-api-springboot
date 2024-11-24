@@ -1,10 +1,10 @@
 package com.citronix.api.web.mapper;
 
 import com.citronix.api.DTO.sale.SaleCreateDto;
+import com.citronix.api.DTO.sale.SaleUpdateDto;
 import com.citronix.api.domain.Sale;
 import com.citronix.api.web.VM.Sale.ResponseSaleVM;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface SaleMapper {
@@ -16,4 +16,7 @@ public interface SaleMapper {
     @Mapping(source = "harvest.harvestDate", target = "harvestDate")
     @Mapping(source = "harvest.season", target = "harvestSeason")
     ResponseSaleVM toResponse(Sale sale);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Sale partialUpdate(SaleUpdateDto saleUpdateDto, @MappingTarget Sale sale);
 }

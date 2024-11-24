@@ -1,6 +1,7 @@
 package com.citronix.api.web.rest;
 
 import com.citronix.api.DTO.sale.SaleCreateDto;
+import com.citronix.api.DTO.sale.SaleUpdateDto;
 import com.citronix.api.domain.Sale;
 import com.citronix.api.service.SaleService;
 import com.citronix.api.web.VM.Sale.ResponseSaleVM;
@@ -42,6 +43,15 @@ public class SaleController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         saleService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/sales/{id}")
+    public ResponseEntity<ResponseSaleVM> updateSale(
+            @PathVariable Long id,
+            @Valid @RequestBody SaleUpdateDto saleUpdateDto) {
+        Sale updatedSale = saleService.update(id, saleUpdateDto);
+        ResponseSaleVM response = saleMapper.toResponse(updatedSale);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/sales/harvest")
