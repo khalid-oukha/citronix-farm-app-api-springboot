@@ -3,6 +3,10 @@ package com.citronix.api.service;
 import com.citronix.api.DTO.farm.FarmCreateDTO;
 import com.citronix.api.DTO.farm.FarmUpdateDto;
 import com.citronix.api.domain.Farm;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.time.LocalDateTime;
 
 public interface FarmService {
     Farm create(FarmCreateDTO farmRequestDTO);
@@ -12,4 +16,7 @@ public interface FarmService {
     Farm findById(Long id);
 
     Farm update(Long id, FarmUpdateDto farmRequestDTO);
+
+    Page<Farm> searchFarms(String name, String location, Double minArea, Double maxArea, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+
 }
